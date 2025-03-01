@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: text-processor-deployment
+  labels:
+    app: text-processor
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: text-processor
+  template:
+    metadata:
+      labels:
+        app: text-processor
+    spec:
+      containers:
+      - name: text-processor
+        image: saimadhavyedupati/text-processor-optimized:latest
+        volumeMounts:
+        - name: data-volume
+          mountPath: /home/data  
+        command: ["python", "/app/script.py"]
+      volumes:
+      - name: data-volume
+        hostPath:
+          path: /run/desktop/mnt/host/c/Users/madha/DockerProject/home/data 
+          type: Directory
